@@ -4,12 +4,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/*JOB: Understands how to credit and debit account */
 public class BankAccount {
     private static final double WITHDRAWAL_FEE = 0.5;
     private static final double TRANSACTION_FEE = 0.2;
     private double balance;
     private  final List<Integer> BILLS = Arrays.asList(5,10,20,50,100);
-    private  ArrayList<Object> transactions;
+    private  ArrayList<Double> transactions;
 
     public BankAccount() {
         this.balance = 0.0;
@@ -50,5 +51,15 @@ public class BankAccount {
 
     public ArrayList getTransactionHistory() {
         return this.transactions;
+    }
+
+    public double getFeeReport() {
+        double totalFees = 0;
+        for (double transaction: transactions) {
+            if (transaction == TRANSACTION_FEE || transaction == WITHDRAWAL_FEE) {
+                totalFees += transaction;
+            }
+        }
+        return totalFees;
     }
 }

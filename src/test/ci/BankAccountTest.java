@@ -69,4 +69,16 @@ public class BankAccountTest {
         a.makeTransfer(b,17.0);
         assertEquals(b.get_balance(), 17.0);
     }
+
+    @Test
+    public void totalFeesMadeFromTwoTransfersAndTwoWithdrawalsShouldEqualOnePointFour() {
+        BankAccount a = new BankAccount();
+        BankAccount b = new BankAccount();
+        a.makeDeposit(100.0);
+        a.withdraw(10.0);
+        a.withdraw(10.0);
+        a.makeTransfer(b,10.0);
+        a.makeTransfer(b,10.0);
+        assertEquals(a.getFeeReport(), 1.40);
+    }
 }
