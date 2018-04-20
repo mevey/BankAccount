@@ -43,4 +43,15 @@ public class BankAccountTest {
         assertEquals(b.get_balance(), 10.0);
     }
 
+    @Test
+    public void numberOftransactionsShouldBeEightAfterTwoDepositsAndThreeWithdrawals() {
+        BankAccount b = new BankAccount();
+        b.makeDeposit(100.0);
+        b.withdraw(50.0);
+        b.makeDeposit(20.0);
+        b.withdraw(30.0);
+        b.withdraw(30.0);
+        assertEquals(b.getTransactionHistory().size() , 8);
+    }
+
 }

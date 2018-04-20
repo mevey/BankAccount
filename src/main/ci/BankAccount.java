@@ -41,4 +41,8 @@ public class BankAccount {
         this.withdraw(amount, TRANSACTION_FEE);
         other.makeDeposit(amount);
     }
+
+    public ArrayList getTransactionHistory() {
+        return this.transactions;
+    }
 }
