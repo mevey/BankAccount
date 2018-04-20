@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class BankAccount {
     private static final double WITHDRAWAL_FEE = 0.5;
+    private static final double TRANSACTION_FEE = 0.2;
     private double balance;
     private final ArrayList<Object> transactions;
 
@@ -12,7 +13,7 @@ public class BankAccount {
         this.transactions = new ArrayList<>();
     }
 
-    public double balance() {
+    public double get_balance() {
         return this.balance ;
     }
 
@@ -23,12 +24,21 @@ public class BankAccount {
     }
 
     public double withdraw(double amount) {
-        if ((this.balance - WITHDRAWAL_FEE)  < amount) {
+        return this.withdraw(amount, WITHDRAWAL_FEE);
+    }
+
+    private double withdraw(double amount, double fee) {
+        if ((this.balance - fee)  < amount) {
             throw new RuntimeException("You do not have enough money in your account to withdraw" + amount);
         }
-        this.balance -= (amount + WITHDRAWAL_FEE);
+        this.balance -= (amount + fee);
         this.transactions.add(amount * -1);
-        this.transactions.add(WITHDRAWAL_FEE);
+        this.transactions.add(fee);
         return this.balance;
+    }
+
+    public void makeTransfer(BankAccount other,  double amount) {
+        this.withdraw(amount, TRANSACTION_FEE);
+        other.makeDeposit(amount);
     }
 }
