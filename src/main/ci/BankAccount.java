@@ -34,7 +34,7 @@ public class BankAccount {
         if ((this.balance - fee)  < amount) {
             throw new RuntimeException("You do not have enough money in your account to withdraw" + amount);
         }
-        if ((amount % 5) != 0)  {
+        if ((amount % 5) != 0 && fee == WITHDRAWAL_FEE)  {
             throw new RuntimeException("You can only withdraw money in multiples of five");
         }
         this.balance -= (amount + fee);

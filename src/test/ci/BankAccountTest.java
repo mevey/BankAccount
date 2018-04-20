@@ -61,5 +61,12 @@ public class BankAccountTest {
         b.withdraw(17.0);
     }
 
-
+    @Test
+    public void accountBbalanceShouldIncreaseBySeventeenWhenATransferIsMadeToIt() {
+        BankAccount a = new BankAccount();
+        BankAccount b = new BankAccount();
+        a.makeDeposit(100.0);
+        a.makeTransfer(b,17.0);
+        assertEquals(b.get_balance(), 17.0);
+    }
 }
