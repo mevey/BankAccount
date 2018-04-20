@@ -24,9 +24,9 @@ public class BankAccount {
         return this.balance ;
     }
 
-    public double getLoanBalance() {
-        return this.loanBalance ;
-    }
+//    public double getLoanBalance() {
+//        return this.loanBalance ;
+//    }
 
     public double makeDeposit(Double amount) {
         this.balance += amount;
