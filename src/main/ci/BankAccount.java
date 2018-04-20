@@ -21,4 +21,11 @@ public class BankAccount {
         this.transactions.add(amount);
         return this.balance;
     }
+
+    public double withdraw(double amount) {
+        this.balance -= (amount + WITHDRAWAL_FEE);
+        this.transactions.add(amount * -1);
+        this.transactions.add(WITHDRAWAL_FEE);
+        return this.balance;
+    }
 }

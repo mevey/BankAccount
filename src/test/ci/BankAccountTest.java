@@ -18,4 +18,12 @@ public class BankAccountTest {
         assertEquals(a.balance(), 20.0);
     }
 
+    @Test
+    public void bankBalanceShouldbeNineFiftyAfterWithdrawingtenDollars() {
+        BankAccount a = new BankAccount();
+        a.makeDeposit(20.0);
+        a.withdraw(10.0);
+        assertEquals(a.balance(), 9.5);
+    }
+
 }
