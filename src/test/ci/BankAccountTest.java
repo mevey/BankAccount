@@ -26,4 +26,11 @@ public class BankAccountTest {
         assertEquals(a.balance(), 9.5);
     }
 
+    @Test(expected = RuntimeException.class)
+    public void attemptToWithdrawMoreThanThebalanceAndWithdrawalFeeShouldFail() {
+        BankAccount a = new BankAccount();
+        a.makeDeposit(20.0);
+        a.withdraw(20.0);
+    }
+
 }
