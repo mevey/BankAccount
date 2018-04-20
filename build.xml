@@ -1,4 +1,4 @@
-<project name="interest-calculator" basedir="." default="test">
+<project name="atm" basedir="." default="test">
 
   <path id="test.classpath">
     <pathelement path="target/classes"/>
