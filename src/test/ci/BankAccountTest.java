@@ -11,4 +11,11 @@ public class BankAccountTest {
         assertEquals(a.balance(), 0.0);
     }
 
+    @Test
+    public void bankBalanceShouldBeTwentyDollarsAfterDepositingTwentyDollars() {
+        BankAccount a = new BankAccount();
+        a.makeDeposit(20.0);
+        assertEquals(a.balance(), 20.0);
+    }
+
 }

@@ -16,4 +16,9 @@ public class BankAccount {
         return this.balance ;
     }
 
+    public double makeDeposit(Double amount) {
+        this.balance += amount;
+        this.transactions.add(amount);
+        return this.balance;
+    }
 }
