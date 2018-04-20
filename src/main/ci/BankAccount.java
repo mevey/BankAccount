@@ -17,6 +17,7 @@ public class BankAccount {
         this.balance = 0.0;
         this.loanBalance = 0.0;
         this.transactions = new ArrayList<>();
+        this.loanTransactions = new ArrayList<>();
     }
 
     public double getBalance() {
@@ -33,9 +34,9 @@ public class BankAccount {
         return this.balance;
     }
 
-    private void makeLoanDeposit(double amount) {
+    private void debitApprovedLoan(double amount) {
         this.loanBalance += amount;
-        this.loanTransactions.add(-1 * amount);
+        this.loanTransactions.add((-1 * amount));
     }
 
     public double withdraw(double amount) {
@@ -76,16 +77,17 @@ public class BankAccount {
     }
 
     public boolean loanRequest(double amount) {
-        double totalDeposits = 0;
+        double totalDeposits = 0.0;
         for (double transaction: transactions) {
-            if (transaction > 0) {
+            if (transaction > 0.0) {
                 totalDeposits += transaction;
             }
         }
-        if ((amount * 0.7)  <= totalDeposits) {
+
+        if ((amount * 0.5)  >= totalDeposits) {
             return false;
         }
-        makeLoanDeposit(amount);
+        debitApprovedLoan(amount);
         return true;
     }
 }

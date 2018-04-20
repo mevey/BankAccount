@@ -88,6 +88,12 @@ public class BankAccountTest {
         BankAccount a = new BankAccount();
         a.makeDeposit(70.0);
         boolean approved = a.loanRequest(100.0);
+
+        BankAccount b = new BankAccount();
+        b.makeDeposit(30.0);
+        boolean notApproved = b.loanRequest(100.0);
+
         assertTrue(approved);
+        assertTrue(!notApproved);
     }
 }
