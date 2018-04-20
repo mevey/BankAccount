@@ -3,19 +3,20 @@ package ci;
 import org.junit.Test;
 
 import static junit.framework.TestCase.assertEquals;
+import static junit.framework.TestCase.assertTrue;
 
 public class BankAccountTest {
     @Test
     public void aNewBankAccountShouldHaveZeroBalance() {
         BankAccount a = new BankAccount();
-        assertEquals(a.get_balance(), 0.0);
+        assertEquals(a.getBalance(), 0.0);
     }
 
     @Test
     public void bankBalanceShouldBeTwentyDollarsAfterDepositingTwentyDollars() {
         BankAccount a = new BankAccount();
         a.makeDeposit(20.0);
-        assertEquals(a.get_balance(), 20.0);
+        assertEquals(a.getBalance(), 20.0);
     }
 
     @Test
@@ -23,7 +24,7 @@ public class BankAccountTest {
         BankAccount a = new BankAccount();
         a.makeDeposit(20.0);
         a.withdraw(10.0);
-        assertEquals(a.get_balance(), 9.5);
+        assertEquals(a.getBalance(), 9.5);
     }
 
     @Test(expected = RuntimeException.class)
@@ -39,8 +40,8 @@ public class BankAccountTest {
         BankAccount b = new BankAccount();
         a.makeDeposit(20.0);
         a.makeTransfer(b,10.0);
-        assertEquals(a.get_balance(), 9.80);
-        assertEquals(b.get_balance(), 10.0);
+        assertEquals(a.getBalance(), 9.80);
+        assertEquals(b.getBalance(), 10.0);
     }
 
     @Test
@@ -67,7 +68,7 @@ public class BankAccountTest {
         BankAccount b = new BankAccount();
         a.makeDeposit(100.0);
         a.makeTransfer(b,17.0);
-        assertEquals(b.get_balance(), 17.0);
+        assertEquals(b.getBalance(), 17.0);
     }
 
     @Test
@@ -79,6 +80,14 @@ public class BankAccountTest {
         a.withdraw(10.0);
         a.makeTransfer(b,10.0);
         a.makeTransfer(b,10.0);
-        assertEquals(a.getFeeReport(), 1.40);
+        assertEquals(a.getTotalFees(), 1.40);
+    }
+
+    @Test
+    public void loansShouldOnlyBeApprovedIfTheDepositsWorthSeventyPercentHaveBeenmadeInThePast() {
+        BankAccount a = new BankAccount();
+        a.makeDeposit(70.0);
+        boolean approved = a.loanRequest(100.0);
+        assertTrue(approved);
     }
 }

@@ -8,23 +8,34 @@ import java.util.List;
 public class BankAccount {
     private static final double WITHDRAWAL_FEE = 0.5;
     private static final double TRANSACTION_FEE = 0.2;
+    private double loanBalance;
     private double balance;
-    private  final List<Integer> BILLS = Arrays.asList(5,10,20,50,100);
     private  ArrayList<Double> transactions;
+    private  ArrayList<Double> loanTransactions;
 
     public BankAccount() {
         this.balance = 0.0;
+        this.loanBalance = 0.0;
         this.transactions = new ArrayList<>();
     }
 
-    public double get_balance() {
+    public double getBalance() {
         return this.balance ;
+    }
+
+    public double getLoanBalance() {
+        return this.loanBalance ;
     }
 
     public double makeDeposit(Double amount) {
         this.balance += amount;
         this.transactions.add(amount);
         return this.balance;
+    }
+
+    private void makeLoanDeposit(double amount) {
+        this.loanBalance += amount;
+        this.loanTransactions.add(-1 * amount);
     }
 
     public double withdraw(double amount) {
@@ -40,7 +51,7 @@ public class BankAccount {
         }
         this.balance -= (amount + fee);
         this.transactions.add(amount * -1);
-        this.transactions.add(fee);
+        this.transactions.add(fee * -1);
         return this.balance;
     }
 
@@ -53,13 +64,28 @@ public class BankAccount {
         return this.transactions;
     }
 
-    public double getFeeReport() {
+    public double getTotalFees() {
         double totalFees = 0;
         for (double transaction: transactions) {
+            transaction = transaction * -1;
             if (transaction == TRANSACTION_FEE || transaction == WITHDRAWAL_FEE) {
                 totalFees += transaction;
             }
         }
         return totalFees;
+    }
+
+    public boolean loanRequest(double amount) {
+        double totalDeposits = 0;
+        for (double transaction: transactions) {
+            if (transaction > 0) {
+                totalDeposits += transaction;
+            }
+        }
+        if ((amount * 0.7)  <= totalDeposits) {
+            return false;
+        }
+        makeLoanDeposit(amount);
+        return true;
     }
 }
