@@ -54,4 +54,12 @@ public class BankAccountTest {
         assertEquals(b.getTransactionHistory().size() , 8);
     }
 
+    @Test(expected = RuntimeException.class)
+    public void oneShouldNotBeAbleToWithdrawBillsWhosevalueIsIndivisibleByFive() {
+        BankAccount b = new BankAccount();
+        b.makeDeposit(100.0);
+        b.withdraw(17.0);
+    }
+
+
 }

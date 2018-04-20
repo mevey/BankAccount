@@ -1,12 +1,15 @@
 package  ci;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class BankAccount {
     private static final double WITHDRAWAL_FEE = 0.5;
     private static final double TRANSACTION_FEE = 0.2;
     private double balance;
-    private final ArrayList<Object> transactions;
+    private  final List<Integer> BILLS = Arrays.asList(5,10,20,50,100);
+    private  ArrayList<Object> transactions;
 
     public BankAccount() {
         this.balance = 0.0;
@@ -30,6 +33,9 @@ public class BankAccount {
     private double withdraw(double amount, double fee) {
         if ((this.balance - fee)  < amount) {
             throw new RuntimeException("You do not have enough money in your account to withdraw" + amount);
+        }
+        if ((amount % 5) != 0)  {
+            throw new RuntimeException("You can only withdraw money in multiples of five");
         }
         this.balance -= (amount + fee);
         this.transactions.add(amount * -1);
