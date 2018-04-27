@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-/*JOB: Understands how to credit and debit account */
+/*JOB: Understands how to credit and debit a bank account */
 public class BankAccount {
     private static final double WITHDRAWAL_FEE = 0.5;
     private static final double TRANSACTION_FEE = 0.2;
@@ -24,9 +24,9 @@ public class BankAccount {
         return this.balance ;
     }
 
-//    public double getLoanBalance() {
-//        return this.loanBalance ;
-//    }
+    public double getLoanBalance() {
+        return this.loanBalance ;
+    }
 
     public double makeDeposit(Double amount) {
         this.balance += amount;
@@ -34,9 +34,11 @@ public class BankAccount {
         return this.balance;
     }
 
-    private void debitApprovedLoan(double amount) {
-        this.loanBalance += amount;
-        this.loanTransactions.add((-1 * amount));
+    public void debitApprovedLoan(boolean approved, double amount) {
+        if (approved == true) {
+            this.loanBalance += amount;
+            this.loanTransactions.add((-1 * amount));
+        }
     }
 
     public double withdraw(double amount) {
@@ -74,20 +76,5 @@ public class BankAccount {
             }
         }
         return totalFees;
-    }
-
-    public boolean loanRequest(double amount) {
-        double totalDeposits = 0.0;
-        for (double transaction: transactions) {
-            if (transaction > 0.0) {
-                totalDeposits += transaction;
-            }
-        }
-
-        if ((amount * 0.5)  >= totalDeposits) {
-            return false;
-        }
-        debitApprovedLoan(amount);
-        return true;
     }
 }

@@ -6,17 +6,18 @@ import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertTrue;
 
 public class BankAccountTest {
+    private static final double DELTA = 1e-15;
     @Test
     public void aNewBankAccountShouldHaveZeroBalance() {
         BankAccount a = new BankAccount();
-        assertEquals(a.getBalance(), 0.0);
+        assertEquals(a.getBalance(), 0.0, DELTA);
     }
 
     @Test
     public void bankBalanceShouldBeTwentyDollarsAfterDepositingTwentyDollars() {
         BankAccount a = new BankAccount();
         a.makeDeposit(20.0);
-        assertEquals(a.getBalance(), 20.0);
+        assertEquals(a.getBalance(), 20.0, DELTA);
     }
 
     @Test
@@ -24,7 +25,7 @@ public class BankAccountTest {
         BankAccount a = new BankAccount();
         a.makeDeposit(20.0);
         a.withdraw(10.0);
-        assertEquals(a.getBalance(), 9.5);
+        assertEquals(a.getBalance(), 9.5, DELTA);
     }
 
     @Test(expected = RuntimeException.class)
@@ -40,8 +41,8 @@ public class BankAccountTest {
         BankAccount b = new BankAccount();
         a.makeDeposit(20.0);
         a.makeTransfer(b,10.0);
-        assertEquals(a.getBalance(), 9.80);
-        assertEquals(b.getBalance(), 10.0);
+        assertEquals(a.getBalance(), 9.80, DELTA);
+        assertEquals(b.getBalance(), 10.0, DELTA);
     }
 
     @Test
@@ -68,7 +69,7 @@ public class BankAccountTest {
         BankAccount b = new BankAccount();
         a.makeDeposit(100.0);
         a.makeTransfer(b,17.0);
-        assertEquals(b.getBalance(), 17.0);
+        assertEquals(b.getBalance(), 17.0, DELTA);
     }
 
     @Test
@@ -80,20 +81,21 @@ public class BankAccountTest {
         a.withdraw(10.0);
         a.makeTransfer(b,10.0);
         a.makeTransfer(b,10.0);
-        assertEquals(a.getTotalFees(), 1.40);
+        assertEquals(a.getTotalFees(), 1.40, DELTA);
     }
 
     @Test
     public void loansShouldOnlyBeApprovedIfTheDepositsWorthSeventyPercentHaveBeenmadeInThePast() {
+        LoanApprover la = new LoanApprover(0.5);
         BankAccount a = new BankAccount();
         a.makeDeposit(70.0);
-        boolean approved = a.loanRequest(100.0);
+
+        a.debitApprovedLoan(la.loanRequest(a,100.0), 100) ;
+        assertEquals(a.getLoanBalance(), 100, DELTA);
 
         BankAccount b = new BankAccount();
         b.makeDeposit(30.0);
-        boolean notApproved = b.loanRequest(100.0);
+        assertEquals(b.getLoanBalance(), 0, DELTA);
 
-        assertTrue(approved);
-        assertTrue(!notApproved);
     }
 }
